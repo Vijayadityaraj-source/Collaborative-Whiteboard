@@ -1,6 +1,7 @@
 import React from 'react';
 import { signOut, useAuth } from '../services/firebase';
 import { useNavigate } from 'react-router-dom';
+import {Button} from '@chakra-ui/react'
 
 export default function Signout() {
     const user = useAuth();
@@ -25,12 +26,12 @@ export default function Signout() {
             (<div>
                 <img src={user.photoURL} alt="ProfilePic" />
                 <p>Welcome, {user.displayName}!</p>
-                <button onClick={handleSignOut}>Sign Out</button>
+                <Button onClick={handleSignOut}>Sign Out</Button>
             </div>)
             :
             (<div>
                 <p>Signed out!</p>
-                <button onClick={handleSignIn}>Sign In</button>
+                <Button onClick={handleSignIn}>Sign In</Button>
             </div>)
         }
         </>

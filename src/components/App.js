@@ -13,9 +13,9 @@ function App(){
     <Router>
       <Routes>
         <Route path="/*" element={<Navigate to="/signin" />} />
-        {user && (<Route path="/signin" element={<Navigate to="/main" />} />)}
-        {!user && (<Route path="/main" element={<Navigate to="/signin" />} />)}
-        <Route path="/main" element={<Main />} />
+        {user && (<Route path="/signin" element={<Navigate to="/" />} />)}
+        {!user && (<Route path="/" element={<Navigate to="/signin" />} />)}
+        <Route path="/" element={<Main />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signout" element={<Signout />} />
         <Route path="/profile" element={<Profile />} />

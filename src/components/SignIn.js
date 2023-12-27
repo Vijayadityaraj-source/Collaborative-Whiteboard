@@ -1,5 +1,6 @@
 import React from 'react';
 import { signInWithGoogle } from '../services/firebase';
+import {Button} from '@chakra-ui/react'
 
 const SignIn = () => {
   const handleSignInWithGoogle = async () => {
@@ -14,7 +15,7 @@ const SignIn = () => {
     <div>
         <div>
           <p>Please sign in to access this feature.</p>
-          <button onClick={handleSignInWithGoogle}>Sign In with Google</button>
+          <Button onClick={handleSignInWithGoogle}>Sign In with Google</Button>
         </div>
     </div>
   );
