@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import Chat from './Chat';
-import { useAuth } from '../services/firebase';
+import { useAuth } from '../utils/firebase';
 import { WelcomeScreen,Sidebar,Footer, MainMenu} from '@excalidraw/excalidraw';
 
 export default function Addons({GithubIcon,DiscordIcon,TwitterIcon}) {

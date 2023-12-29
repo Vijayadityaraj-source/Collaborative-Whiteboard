@@ -1,5 +1,5 @@
 import React from 'react';
-import { signOut, useAuth } from '../services/firebase';
+import { signOut, useAuth } from '../utils/firebase';
 import { useNavigate } from 'react-router-dom';
 import {Button} from '@chakra-ui/react'
 

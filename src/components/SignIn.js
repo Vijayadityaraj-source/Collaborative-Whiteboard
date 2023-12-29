@@ -1,5 +1,5 @@
 import React from 'react';
-import { signInWithGoogle } from '../services/firebase';
+import { signInWithGoogle, writeSceneData,useAuth } from '../utils/firebase';
 import {Button} from '@chakra-ui/react'
 
 const SignIn = () => {

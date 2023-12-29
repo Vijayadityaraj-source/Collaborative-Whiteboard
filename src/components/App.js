@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import SignIn from './SignIn';
 import Main from './Main';
-import { useAuth } from '../services/firebase';
+import { useAuth } from '../utils/firebase';
 import Signout from './Signout';
 import Profile from './Profile';
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAuth } from '../services/firebase'
+import { useAuth } from '../utils/firebase'
 
 export default function Profile() {
     const user = useAuth();

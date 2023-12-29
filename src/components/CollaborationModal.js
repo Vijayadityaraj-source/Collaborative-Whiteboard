@@ -14,7 +14,7 @@ import {
   Center,
   Divider
 } from '@chakra-ui/react';
-import { getSessionURL } from '../services/roomids';
+import { getSessionURL } from '../utils/roomids';
 
 
 const CollaborationModal = ({onStartSession, onStopSession }) => {
