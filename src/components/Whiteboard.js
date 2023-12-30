@@ -18,8 +18,11 @@ function Whiteboard(){
     if (user) {
       const fetchData = async () => {
         try {
-          const data = await readSceneDataOnce(user.email);
-          if(!data) writeSceneData(user.email, data);
+          let data = await readSceneDataOnce(user.email);
+          if(!data){
+            writeSceneData(user.email,data);
+            data=readSceneDataOnce(user.email);
+          }
           setSceneData(data);
           setUpdatedSceneData(true);
         } catch (error) {
@@ -35,7 +38,7 @@ function Whiteboard(){
     // Update initialData when sceneData changes
     if (sceneData) {
       setInitialData({
-        elements: sceneData ? sceneData.data : [],
+        elements: sceneData.data,
       });
     }
   }, [sceneData]);

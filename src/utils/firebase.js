@@ -82,6 +82,7 @@ export const readSceneDataOnce = (email) => {
     get(child(dbRef, `Scenes/${encodedEmail}`)).then((snapshot) => {
       if (snapshot.exists()) {
         resolve(snapshot.val());
+        console.log(snapshot.val());
       } else {
         console.log("No data available");
         resolve(null);
