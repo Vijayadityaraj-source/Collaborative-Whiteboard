@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/database';
-import { getDatabase,ref,set,onValue,child, get } from "firebase/database";
+import { getDatabase,ref,set,child,get } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyADDAprGpOt7XV-yxu-5-Sojsw3b7hwAyA",
@@ -18,7 +18,7 @@ const firebaseConfig = {
 const app=firebase.initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// Custom hook for handling authentication
+/* AUTHENTICATION */
 export const useAuth = () => {
     const [user, setUser] = useState(null);
   
@@ -34,9 +34,20 @@ export const useAuth = () => {
     return user;
 };
 
+export const signInWithGoogle = async () => {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  await auth.signInWithPopup(provider);
+};
+
+export const signOut = async () => {
+  await auth.signOut();
+};
+export const auth = firebase.auth();
+export const database = firebase.database();
+
+/* SCENE DATA HANDLING */
 export const writeSceneData = (email, data) => {
   const encodedEmail = btoa(email);
-
   // Check for undefined values in the data
   const cleanData = removeUndefinedValues(data);
 
@@ -63,7 +74,6 @@ const removeUndefinedValues = (obj) => {
   return obj;
 };
 
-
 export const readSceneDataOnce = (email) => {
   return new Promise((resolve, reject) => {
     const encodedEmail = btoa(email);
@@ -71,11 +81,10 @@ export const readSceneDataOnce = (email) => {
 
     get(child(dbRef, `Scenes/${encodedEmail}`)).then((snapshot) => {
       if (snapshot.exists()) {
-        console.log(snapshot.val());
         resolve(snapshot.val());
       } else {
         console.log("No data available");
-        resolve(null); // Resolve with null if no data is available
+        resolve(null);
       }
     }).catch((error) => {
       console.error(error);
@@ -84,16 +93,4 @@ export const readSceneDataOnce = (email) => {
   });
 };
 
-
-// Authentication-related functions
-export const signInWithGoogle = async () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    await auth.signInWithPopup(provider);
-};
-  
-export const signOut = async () => {
-    await auth.signOut();
-};
-
-export const auth = firebase.auth();
-export const database = firebase.database();
+/* ROOM DATA HANDLING */

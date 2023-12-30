@@ -1,14 +1,13 @@
 import React,{useState,useEffect} from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAuth,writeSceneData,readSceneDataOnce } from '../utils/firebase';
 import CollaborationModal from './CollaborationModal';
 import { Excalidraw} from '@excalidraw/excalidraw';
 import Addons from './Addons';
 import {GithubIcon,TwitterIcon,DiscordIcon} from '../utils/createicons';
+import { getRoomIdFromUrl } from '../utils/roomids';
 
 function Whiteboard(){ 
   const user=useAuth();
-  const navigate = useNavigate();
   const [iscollaborating, setIscollaborating] = useState(false);
   const [sceneData, setSceneData] = useState(null);
   const [initialData, setInitialData] = useState(null);
@@ -20,6 +19,7 @@ function Whiteboard(){
       const fetchData = async () => {
         try {
           const data = await readSceneDataOnce(user.email);
+          if(!data) writeSceneData(user.email, data);
           setSceneData(data);
           setUpdatedSceneData(true);
         } catch (error) {
@@ -29,7 +29,7 @@ function Whiteboard(){
       };
       fetchData();
     }
-  }, [user]);
+  }, [user,iscollaborating]);
 
   useEffect(() => {
     // Update initialData when sceneData changes
