@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/database';
-import { getDatabase,ref,set,child,get } from "firebase/database";
+import { getDatabase,ref,set,child,get,onValue,runTransaction } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyADDAprGpOt7XV-yxu-5-Sojsw3b7hwAyA",
@@ -82,7 +82,6 @@ export const readSceneDataOnce = (email) => {
     get(child(dbRef, `Scenes/${encodedEmail}`)).then((snapshot) => {
       if (snapshot.exists()) {
         resolve(snapshot.val());
-        console.log(snapshot.val());
       } else {
         console.log("No data available");
         resolve(null);
@@ -95,3 +94,38 @@ export const readSceneDataOnce = (email) => {
 };
 
 /* ROOM DATA HANDLING */
+export const readRoomData = (roomid) => {
+  return new Promise((resolve,reject)=>{
+    const dbRef = ref(getDatabase(app));
+
+    get(child(dbRef, `Rooms/${roomid}`)).then((snapshot) => {
+      if (snapshot.exists()) {
+        resolve(snapshot.val());
+      } else {
+        console.log("No data available");
+        resolve(null);
+      }
+    }).catch((error) => {
+      console.error(error);
+      reject(error);
+    });
+  });
+};
+
+//to handle concurrent modifications we are using transactions.
+export const writeRoomData = (roomid,user,data) => {
+  const encodedEmail = btoa(user.email);
+  const cleanData = removeUndefinedValues(data);
+  const dbRef = ref(db, 'Rooms/' + roomid + '/Collaborators/' + encodedEmail);
+  const otherdbRef = ref(db,'Rooms/'+roomid)
+
+  runTransaction(dbRef, (post) => {
+    set(otherdbRef, {
+      data:cleanData
+    });
+    set(dbRef, {
+      email: user.email,
+      photoURL: user.photoURL,
+    });
+  });
+};

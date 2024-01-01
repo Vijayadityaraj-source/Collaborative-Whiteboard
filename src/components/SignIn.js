@@ -1,8 +1,10 @@
 import React from 'react';
-import { signInWithGoogle, writeSceneData,useAuth } from '../utils/firebase';
+import { signInWithGoogle } from '../utils/firebase';
 import {Button} from '@chakra-ui/react'
 
 const SignIn = () => {
+  console.log('signin');
+
   const handleSignInWithGoogle = async () => {
     try {
       await signInWithGoogle();

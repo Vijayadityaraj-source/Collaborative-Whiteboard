@@ -17,8 +17,8 @@ import {
 import { getSessionURL } from '../utils/roomids';
 
 
-const CollaborationModal = ({onStartSession, onStopSession }) => {
-  const [isSessionStarted, setSessionStarted] = useState(false);
+const CollaborationModal = ({onStartSession, onStopSession,iscollaborating }) => {
+  const [isSessionStarted, setSessionStarted] = useState(iscollaborating);
   const [createdRoom,setCreatedRoom] = useState(false);
   const [sessionUrl,setSessionUrl] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();

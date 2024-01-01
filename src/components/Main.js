@@ -2,6 +2,8 @@ import React from 'react';
 import Whiteboard from './Whiteboard';
 
 const Main = () => {
+  console.log('main');
+
   return (
     <div className="whiteboard-container">
       <div className="whiteboard">
